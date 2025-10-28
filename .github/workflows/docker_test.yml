@@ -15,8 +15,10 @@ jobs:
         include:
           - os: ubuntu-22.04
             platform_alias: linux
+            arch_alias: linux-x64
           - os: ubuntu-22.04-arm
             platform_alias: linux
+            arch_alias: linux-arm64
     name: Build on ${{ matrix.os }} and upload artifacts
     runs-on: ${{ matrix.os }}
     env:
@@ -46,14 +48,14 @@ jobs:
       - name: Package app
         run: cargo pack-${{ matrix.platform_alias }} --tag ${{ env.RELEASE_TAG }}
       # Upload Linux x64 build to artifacts
-      - if: matrix.os == 'ubuntu-22.04'
+      - if: matrix.arch_alias == 'linux-x64'
         name: Upload Linux x64 artifacts
         uses: actions/upload-artifact@v4
         with:
           name: linux-x64-assets
           path: package/linux/
       # Upload Linux arm64 build to artifacts
-      - if: matrix.os == 'ubuntu-22.04-arm'
+      - if: matrix.arch_alias == 'linux-arm64'
         name: Upload Linux arm64 artifacts
         uses: actions/upload-artifact@v4
         with:

@@ -16,10 +16,13 @@ jobs:
         include:
           - os: ubuntu-22.04
             platform_alias: linux
+            arch_alias: linux-x64
           - os: ubuntu-22.04-arm
             platform_alias: linux
+            arch_alias: linux-arm64
           - os: windows-latest
             platform_alias: win32
+            arch_alias: win32-x64
     name: Build on ${{ matrix.os }} and upload release assets
     runs-on: ${{ matrix.os }}
     env:
@@ -63,6 +66,20 @@ jobs:
         with:
           files: |
             ./package/artifacts/*
+      # Upload Linux x64 build to artifacts
+      - if: matrix.arch_alias == 'linux-x64'
+        name: Upload Linux x64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-x64-assets
+          path: package/linux/
+      # Upload Linux arm64 build to artifacts
+      - if: matrix.arch_alias == 'linux-arm64'
+        name: Upload Linux arm64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-arm64-assets
+          path: package/linux/
 
   docker-publish:
     name: Publish image to Docker Hub
@@ -75,6 +92,18 @@ jobs:
       # Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
+      # Download Linux x64 build artifacts
+      - name: Download Linux x64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-x64-assets
+          path: package/linux/amd64
+      # Download Linux arm64 build artifacts
+      - name: Download Linux arm64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-arm64-assets
+          path: package/linux/arm64
       # Set up QEMU
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -92,7 +121,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: build.Dockerfile
+          file: ci.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
