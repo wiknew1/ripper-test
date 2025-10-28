@@ -3,7 +3,7 @@ version: "3"
 services:
   ufc-ripper:
     build: .
-    image: m4heshd/ufc-ripper
+    image: m4heshd2/ripper-test
     container_name: ufc-ripper
     restart: "no"
     volumes:

@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RELEASE_TAG: ${{ github.event.release.tag_name }}
-      DOCKER_REPO: m4heshd/ufc-ripper
+      DOCKER_REPO: m4heshd2/ripper-test
     steps:
       # Checkout repo
       - name: Checkout
