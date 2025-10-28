@@ -15,6 +15,7 @@ jobs:
           - windows-latest
         include:
           - os: ubuntu-22.04
+            platform_alias: linux
           - os: ubuntu-22.04-arm
             platform_alias: linux
           - os: windows-latest
