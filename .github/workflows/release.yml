@@ -10,10 +10,12 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
+          - ubuntu-22.04
+          - ubuntu-22.04-arm
           - windows-latest
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
+          - os: ubuntu-22.04-arm
             platform_alias: linux
           - os: windows-latest
             platform_alias: win32
@@ -60,13 +62,6 @@ jobs:
         with:
           files: |
             ./package/artifacts/*
-      # Upload Linux build to artifacts
-      - if: matrix.os == 'ubuntu-latest'
-        name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-assets
-          path: package/linux/
 
   docker-publish:
     name: Publish image to Docker Hub
@@ -79,12 +74,6 @@ jobs:
       # Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
-      # Download Linux build artifacts
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-assets
-          path: package/linux/
       # Set up QEMU
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -102,7 +91,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64
+          file: build.Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ env.DOCKER_REPO }}:${{ github.event.release.tag_name }}
