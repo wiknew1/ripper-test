@@ -17,7 +17,7 @@ jobs:
             platform_alias: linux
           - os: ubuntu-22.04-arm
             platform_alias: linux
-    name: Build on ${{ matrix.os }} and upload release assets
+    name: Build on ${{ matrix.os }} and upload artifacts
     runs-on: ${{ matrix.os }}
     env:
       RELEASE_TAG: debug-${{ github.run_number }}
@@ -61,7 +61,7 @@ jobs:
           path: package/linux/
 
   docker-publish:
-    name: Publish image to Docker Hub
+    name: Test building Docker image
     needs: build-assets
     runs-on: ubuntu-latest
     env:

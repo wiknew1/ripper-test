@@ -13,7 +13,7 @@ WORKDIR /ufcr
 ENV RUN_ENV=container
 
 # Setup app
-COPY ./package/${TARGETARCH} .
+COPY ./package/linux/${TARGETARCH} .
 RUN chmod +x ./ufc-ripper
 
 # Ports
