@@ -1,6 +1,6 @@
 name: docker_test
 
-run-name: Test Docker builds
+run-name: "Docker test build #${{ github.run_number }}"
 
 on:
   workflow_dispatch:
@@ -101,4 +101,3 @@ jobs:
           push: false
           tags: |
             ${{ env.DOCKER_REPO }}:${{ env.RELEASE_TAG }}
-            ${{ env.DOCKER_REPO }}:latest
