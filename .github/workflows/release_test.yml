@@ -1,6 +1,6 @@
 name: release_test
 
-run-name: Test release debug-${{ github.run_number }} ${{ inputs.publish && '(published)' || '' }}
+run-name: Test release dev.${{ github.run_number }} ${{ inputs.publish && '(published)' || '' }}
 
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
     name: Build on ${{ matrix.os }} and upload release assets
     runs-on: ${{ matrix.os }}
     env:
-      RELEASE_TAG: debug-${{ github.run_number }}
+      RELEASE_TAG: dev.${{ github.run_number }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v4
@@ -96,7 +96,7 @@ jobs:
     needs: build-assets
     runs-on: ubuntu-latest
     env:
-      RELEASE_TAG: debug-${{ github.run_number }}
+      RELEASE_TAG: dev.${{ github.run_number }}
       DOCKER_REPO: m4heshd2/ripper-test
     steps:
       # Checkout repo
