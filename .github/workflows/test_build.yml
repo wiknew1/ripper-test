@@ -23,7 +23,14 @@ jobs:
     name: Building for tests on ${{ inputs.platform }}
     runs-on: ${{ inputs.platform }}
     env:
-      TARGET_PLATFORM: ${{ fromJSON('{"windows-latest":"win32","ubuntu-latest":"linux","ubuntu-24.04-arm":"linux"}')[ inputs.platform ] }}
+      TARGET_PLATFORM: >
+        ${{ fromJSON('{
+          "windows-latest": "win32",
+          "ubuntu-latest": "linux",
+          "ubuntu-24.04-arm": "linux",
+          "macos-15": "macos",
+          "macos-15-intel": "macos"
+        }')[ inputs.platform ] }}
     steps:
       # Checkout repo
       - uses: actions/checkout@v4
