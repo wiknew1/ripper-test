@@ -52,7 +52,7 @@ jobs:
       - name: Package app
         run: cargo pack-${{ matrix.platform_alias }} --tag ${{ env.RELEASE_TAG }}
       # Create Windows installer
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.platform_alias == 'win32'
         name: Create Windows installer
         shell: bash
         run: |
