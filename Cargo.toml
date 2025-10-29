@@ -13,7 +13,7 @@ resolver = "2"
 version = "3.2.1"
 authors = ["Mahesh Bandara Wijerathna <m4heshd@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/m4heshd/ripper-test"
+repository = "https://github.com/wiknew1/ripper-test"
 edition = "2021"
 publish = false
 

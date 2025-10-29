@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RELEASE_TAG: debug-${{ github.run_number }}
-      DOCKER_REPO: m4heshd2/ripper-test
+      DOCKER_REPO: wiknew1/ripper-test
     steps:
       # Checkout repo
       - name: Checkout

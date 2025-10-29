@@ -3,10 +3,10 @@
   "version": "3.2.1",
   "description": "Video downloader tool for UFC Fight Pass",
   "author": "Mahesh Bandara Wijerathna (m4heshd) <m4heshd@gmail.com>",
-  "homepage": "https://github.com/m4heshd/ripper-test",
+  "homepage": "https://github.com/wiknew1/ripper-test",
   "repository": {
     "type": "git",
-    "url": "git://github.com/m4heshd/ripper-test.git"
+    "url": "git://github.com/wiknew1/ripper-test.git"
   },
   "license": "MIT",
   "private": true,
