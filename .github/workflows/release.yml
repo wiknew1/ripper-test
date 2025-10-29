@@ -82,7 +82,7 @@ jobs:
           path: package/linux/
 
   docker-publish:
-    name: Publish image to Docker Hub
+    name: Build and publish image to Docker Hub
     needs: build-assets
     runs-on: ubuntu-latest
     env:
@@ -125,7 +125,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.DOCKER_REPO }}:${{ github.event.release.tag_name }}
+            ${{ env.DOCKER_REPO }}:${{ env.RELEASE_TAG }}
             ${{ env.DOCKER_REPO }}:latest
       # Update Docker Hub repo description
       - name: Update repo description
