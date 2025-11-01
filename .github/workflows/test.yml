@@ -14,7 +14,11 @@ jobs:
       matrix:
         os:
           - windows-latest
-          - ubuntu-latest
+          - windows-11-arm
+          - ubuntu-22.04
+          - ubuntu-22.04-arm
+          - macos-15
+          - macos-15-intel
     name: Testing on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
