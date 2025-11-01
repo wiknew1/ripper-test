@@ -1,0 +1,49 @@
+name: test_mac_app
+
+run-name: Test mac App package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # Build and upload as artifacts
+  build:
+    name: Building mac App package on macos-15-intel
+    runs-on: macos-15-intel
+    steps:
+      # Checkout repo
+      - uses: actions/checkout@v4
+      # Setup Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Install npm deps
+      - name: Install npm dependencies
+        run: npm install --no-audit
+      # Build Vue frontend
+      - name: Build frontend
+        run: npm run build
+      # Set up Rust and Cargo
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: 1.90.0
+      # Build app
+      - name: Build backend
+        run: cargo build-macos
+      # Package app for release
+      - name: Package app
+        run: cargo pack-macos --tag debug-${{ github.run_number }}
+      # Create Windows installer
+      - name: Create mac App package
+        shell: bash
+        run: |
+          cargo install cargo-packager --version 0.11.7 --locked
+          cargo packager -p ufc-ripper --profile dist
+          rm -rf ./package/artifacts/.cargo-packager || true
+      # Upload build artifact
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ufc-ripper-mac-app-test-${{ github.run_number }}-artifacts
+          path: package/artifacts/*
